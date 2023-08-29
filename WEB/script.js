@@ -47,3 +47,18 @@ console.log(f)
 g = [22, 22, 22, 23]
 g = g.every((e) => e == 22)
 console.log(g)
+
+const title = document.querySelector("h1")
+//const titleText = title.innerText
+//console.log(titleText)
+//title.innerText = "другой заголовок"
+const button = document.querySelector("button")
+function changeText() {
+    title.innerText = "другой заголовок"
+    console.log(title.innerText)
+};
+button.addEventListener("click", changeText)
+//button.removeEventListener("click", changeText)
+
+const p = document.querySelectorAll("p")
+console.log(p[0].innerText)
