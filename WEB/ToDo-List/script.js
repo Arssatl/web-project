@@ -12,6 +12,7 @@ tasks = document.querySelectorAll(".li")
 deletes = document.querySelectorAll(".delete")
 edits = document.querySelectorAll(".edit")
 
+editsIdList = []
 const taskList = []
 
 calcCompleted = function() {
@@ -29,6 +30,66 @@ calcTotal = function() {
 
 deleteClick = function() {
     console.log(111)
+}
+
+handleEdit = function(id){
+    item = document.getElementById(`${id}`)
+
+    itemLabel = item.childNodes[1].childNodes[3].innerText
+    item.childNodes[1].childNodes[3].style.display = "none"
+    item.childNodes[1].innerHTML += `
+        <input type="text" class="edit-input" id="edit-input-${id}" value="${itemLabel}"> <button class="edit-button" id="edit-button-${id}">&#10004;</button>
+    `
+    itemCheck = document.getElementById(`task-${id}`)
+    console.log(itemCheck)
+    task = JSON.parse(localStorage.getItem(id))
+    if (task.check) {
+        itemCheck.checked = true
+        itemCheck.setAttribute("checked", "")
+    }
+    else {
+        itemCheck.checked = false
+    }
+    console.log(itemCheck)
+
+
+    editButton = document.getElementById(`edit-button-${id}`)
+    editInput = document.getElementById(`edit-input-${id}`)
+    editButton.addEventListener("click", (btn) => {
+        editButtonId = btn.target.id.split("-")[2]
+        editButton = document.getElementById(`edit-button-${editButtonId}`)
+        editInput = document.getElementById(`edit-input-${editButtonId}`)
+        completedItem = document.getElementById(editButtonId)
+        editInputValue = editInput.value
+        completedItem.childNodes[1].childNodes[3].innerText = editInputValue
+        completedItem.childNodes[1].childNodes[3].style.display = "block"
+        editsIdList = editsIdList.splice(String(id), 1)
+        itemCheck = document.getElementById(`task-${editButtonId}`)
+        task = JSON.parse(localStorage.getItem(editButtonId))
+        if (itemCheck.checked) {
+            completedItem.childNodes[1].childNodes[3].style.textDecoration = "line-through"
+            task.check = true
+        }
+        else {
+            completedItem.childNodes[1].childNodes[3].style.textDecoration = "none"
+            task.check = false
+        }
+        localStorage.setItem(id, JSON.stringify(task))
+        calcCompleted()
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        editInput.remove()
+        editButton.remove()
+
+        keys = Object.keys(localStorage)
+        for (i = localStorage.length - 1; i >= 0; i--) {
+            task = JSON.parse(localStorage.getItem(keys[i]))
+            if (task.id == editButtonId) {
+                task.label = editInputValue
+                localStorage.setItem(keys[i], JSON.stringify(task))
+            }
+        }
+        // console.log(id)
+    })
 }
 
 checkboxClick = function() {
@@ -109,6 +170,7 @@ formButtonClick = function() {
 
     checkboxes = document.querySelectorAll(".checkbox")
     checkboxes.forEach(function(e) {
+        e.removeEventListener("change", checkboxClick)
         e.addEventListener("change", checkboxClick)
     });
 
@@ -123,6 +185,32 @@ formButtonClick = function() {
     })
 
     console.log(checkboxes)
+
+    task = document.getElementById(id)
+    edit = task.childNodes[3].childNodes[1]
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!
+    console.log(edit)
+    // edit.addEventListener("click", () => {
+    //     id = edit.parentNode.parentNode.id
+    //     if (!editsIdList.includes(id)) {
+    //         editsIdList.push(id)
+    //         handleEdit(id)
+    //     }
+    //     console.log(editsIdList)
+    //     // console.log(edit.parentNode.parentNode.id)
+    // })
+    edits = document.querySelectorAll(".edit")
+    edits.forEach((edit) => {
+        edit.addEventListener("click", () => {
+            id = edit.parentNode.parentNode.id
+            if (!editsIdList.includes(id)) {
+                editsIdList.push(id)
+                handleEdit(id)
+            }
+            console.log(editsIdList)
+            // console.log(edit.parentNode.parentNode.id)
+        })
+    })
 
     calcTotal()
 }
@@ -271,3 +359,15 @@ handleFilterUncompleted = function() {
 filterAllBtn.addEventListener("change", handleFilterAll)
 filterCompletedBtn.addEventListener("change", handleFilterCompleted)
 filterUncompletedBtn.addEventListener("change", handleFilterUncompleted)
+
+edits.forEach((edit) => {
+    edit.addEventListener("click", () => {
+        id = edit.parentNode.parentNode.id
+        if (!editsIdList.includes(id)) {
+            editsIdList.push(id)
+            handleEdit(id)
+        }
+        console.log(editsIdList)
+        // console.log(edit.parentNode.parentNode.id)
+    })
+})

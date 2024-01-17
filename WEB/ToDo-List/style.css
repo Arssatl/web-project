@@ -56,6 +56,7 @@ label {
     margin-right: 20px;
     margin-left: 10px;
     transform: scale(2.5);
+    margin-top: 3px;
 }
 .list {
     padding: 0;
@@ -131,4 +132,18 @@ ul {
 }
 .filter-item {
     justify-content: flex-start;
+}
+.edit-input {
+    height: 25px;
+    padding: 0;
+    margin: 0;
+    /* border: 0; */
+    /* margin-bottom: 3px; */
+    padding-left: 3px;
+    width: 600px;
+}
+.edit-button {
+    height: 28px;
+    /* margin-bottom: 3px; */
+    width: 28px;
 }
