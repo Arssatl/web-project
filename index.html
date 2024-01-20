@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Todo List</title>
+</head>
+<body>
+    <h1 class="title">ToDo List</h1>
+    <div class="wrap">
+        <form class="form">
+            <input class="form__input" maxlength="50" type="text"><button class="form__button" type="button">Add</button>
+        </form>
+        <div class="buttons-wrap">
+            <button class="complete-all btn" type="button">Complete all tasks</button>
+            <button class="delete-all btn" type="button">Delete completed tasks</button>
+            <div class="filter-wrap">
+                <button class="filter btn" type="button">Filter</button>
+                <div class="filter-popup">
+                    <ul class="filter-popup__wrap">
+                        <li class="filter-item"><input class="filter-checkbox filter-all"  type="radio" name="filter" checked>All</li>
+                        <li class="filter-item"><input class="filter-checkbox filter-completed" type="radio" name="filter">Completed</li>
+                        <li class="filter-item"><input class="filter-checkbox filter-uncompleted" type="radio" name="filter">Uncompleted</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <ul class="list">
+            <!-- <li id="0">
+                <div class="task">
+                    <input type="checkbox" id="task-0" class="checkbox">
+                    <label for="task-0" class="label">Task 0</label>
+                </div>
+                <div class="buttons">
+                    <img src="icons/edit.png" class="edit" id="edit-0">
+                    <img src="icons/delete.png" class="delete" id="delete-0"> 
+                </div>
+            </li> -->
+        </ul> 
+        <div class="count-wrap">
+            <p>Completed: <span class="completed">0</span></p>
+            <p>Total tasks: <span class="total">0</span></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
